@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sarukesh - Portfolio (Teal & Emerald)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Custom CSS for Inter font and smooth scroll behavior */
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth; /* Smooth scrolling for anchor links */
+            overflow-x: hidden; /* Prevent horizontal scroll caused by animations */
+        }
+
+        /* Custom scrollbar styling (optional) */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+            border-radius: 10px;
+        }
+
+        /* Keyframe for fade-in-up animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Apply fade-in-up animation */
+        .animate-fade-in-up {
+            animation: fadeInUp 0.6s ease-out forwards;
+            opacity: 0; /* Start hidden */
+        }
+
+        /* Delay animations for sequential appearance */
+        .animate-fade-in-up.delay-100 { animation-delay: 0.1s; }
+        .animate-fade-in-up.delay-200 { animation-delay: 0.2s; }
+        .animate-fade-in-up.delay-300 { animation-delay: 0.3s; }
+        .animate-fade-in-up.delay-400 { animation-delay: 0.4s; }
+        .animate-fade-in-up.delay-500 { animation-delay: 0.5s; }
+        .animate-fade-in-up.delay-600 { animation-delay: 0.6s; }
+
+        /* Keyframe for slide-in-left animation */
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Keyframe for slide-in-right animation */
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Keyframe for pop-in animation */
+        @keyframes popIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Hide elements that will be animated on scroll */
+        .animate-on-scroll {
+            opacity: 0;
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0); /* Default for fade-in-up */
+        }
+
+        .animate-on-scroll.slide-in-left.is-visible {
+            transform: translateX(0);
+        }
+
+        .animate-on-scroll.slide-in-right.is-visible {
+            transform: translateX(0);
+        }
+
+        .animate-on-scroll.pop-in.is-visible {
+            transform: scale(1);
+        }
+
+        /* Hero Canvas Styling */
+        #heroCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0; /* Ensures it's behind the content */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-900 leading-normal tracking-normal">
+
+    <header class="bg-white shadow-md py-4 sticky top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center px-4">
+            <a href="#hero" class="text-2xl font-bold text-teal-600 rounded-md p-2 hover:bg-teal-50 transition duration-300">SARUKESH T</a>
+            <nav>
+                <ul class="flex space-x-6">
+                    <li><a href="#about" class="text-gray-700 hover:text-teal-600 font-medium transition duration-300 rounded-md p-2 hover:bg-teal-50">About</a></li>
+                    <li><a href="#skills" class="text-gray-700 hover:text-teal-600 font-medium transition duration-300 rounded-md p-2 hover:bg-teal-50">Skills</a></li>
+                    <li><a href="#projects" class="text-gray-700 hover:text-teal-600 font-medium transition duration-300 rounded-md p-2 hover:bg-teal-50">Projects</a></li>
+                    <li><a href="#certifications" class="text-gray-700 hover:text-teal-600 font-medium transition duration-300 rounded-md p-2 hover:bg-teal-50">Certifications</a></li>
+                    <li><a href="#contact" class="text-gray-700 hover:text-teal-600 font-medium transition duration-300 rounded-md p-2 hover:bg-teal-50">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="hero" class="relative bg-gradient-to-r from-teal-500 to-emerald-600 text-white py-20 md:py-32 flex items-center justify-center min-h-screen-75 overflow-hidden">
+        <canvas id="heroCanvas"></canvas>
+        <div class="container mx-auto text-center px-4 relative z-10">
+            <h1 class="text-4xl md:text-6xl font-extrabold mb-4 animate-fade-in-up delay-200">Hi, I'm SARUKESH🖖!</h1>
+            <p class="text-xl md:text-2xl mb-8 animate-fade-in-up delay-300">A passionate <span class="font-semibold">Full-stack Developer</span> specializing in creating dynamic and responsive web experiences.</p>
+            <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6 animate-fade-in-up delay-400">
+                <a href="#projects" class="bg-white text-teal-600 hover:bg-teal-100 font-bold py-3 px-8 rounded-full shadow-lg transition duration-300 transform hover:scale-105 inline-block">View My Work</a>
+                <a href="src/Sarukeh B.Sc(CS)2025 8.0 CGPA.pdf" download="Sarukeh B.Sc(CS)2025 8.3 CGPA.pdf" class="bg-teal-700 text-white hover:bg-teal-800 border-2 border-white font-bold py-3 px-8 rounded-full shadow-lg transition duration-300 transform hover:scale-105 inline-block">Download Resume</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="py-16 md:py-24 bg-white">
+        <div class="container mx-auto px-4 max-w-4xl">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-10 animate-on-scroll fade-in-up">About Me</h2>
+            <div class="flex flex-col md:flex-row items-center md:space-x-10">
+                <div class="md:w-1/3 mb-8 md:mb-0 animate-on-scroll slide-in-left">
+                    <img src="https://placehold.co/300x300/20B2AA/FFFFFF?text=About+Me" alt="About Me Image" class="rounded-lg shadow-lg w-full h-auto object-cover">
+                </div>
+                <div class="md:w-2/3 text-lg text-gray-700 leading-relaxed animate-on-scroll slide-in-right">
+                    <p class="mb-4"> Hello! I'm Sarukesh, a motivated and detail-oriented web developer with a strong focus on backend development using <strong>Python</strong>, <strong>Django</strong>, and <strong>SQL</strong>. I enjoy solving complex problems and building scalable, efficient web applications that deliver real value.</p>
+                    <p class="mb-4"> With hands-on experience developing RESTful APIs, managing relational databases, and creating dynamic web applications, I take pride in writing clean, maintainable code. I’m equally comfortable working on backend systems as I am collaborating with frontend tools to create full-stack solutions.</p>
+                    <p class="mb-4"> I’m passionate about continuous learning and enjoy tackling algorithmic challenges to sharpen my problem-solving skills. Outside of coding, I like exploring new technologies, contributing to tech communities, and occasionally diving into articles on system design and software architecture.</p>
+                    <p> I believe great code isn’t just about making things work — it’s about making things better. Let’s build something amazing.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="py-16 md:py-24 bg-gray-50">
+        <div class="container mx-auto px-4 max-w-4xl">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-10 animate-on-scroll fade-in-up">My Skills</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+
+                <div class="bg-white p-6 rounded-lg shadow-md flex flex-col items-center text-center hover:shadow-xl transition duration-300 transform hover:-translate-y-1 hover:rotate-3 animate-on-scroll pop-in delay-100">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5 Icon" class="w-16 h-16 mb-4" />
+                    <h3 class="text-xl font-semibold text-gray-800">HTML5</h3>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md flex flex-col items-center text-center hover:shadow-xl transition duration-300 transform hover:-translate-y-1 hover:-rotate-3 animate-on-scroll pop-in delay-200">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3 Icon" class="w-16 h-16 mb-4" />
+                    <h3 class="text-xl font-semibold text-gray-800">CSS3</h3>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md flex flex-col items-center text-center hover:shadow-xl transition duration-300 transform hover:-translate-y-1 hover:rotate-3 animate-on-scroll pop-in delay-300">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript Icon" class="w-16 h-16 mb-4" />
+                    <h3 class="text-xl font-semibold text-gray-800">JavaScript</h3>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md flex flex-col items-center text-center hover:shadow-xl transition duration-300 transform hover:-translate-y-1 hover:-rotate-3 animate-on-scroll pop-in delay-400">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python Icon" class="w-16 h-16 mb-4" />
+                    <h3 class="text-xl font-semibold text-gray-800">Python</h3>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md flex flex-col items-center text-center hover:shadow-xl transition duration-300 transform hover:-translate-y-1 hover:rotate-3 animate-on-scroll pop-in delay-500">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" alt="Django Icon" class="w-16 h-16 mb-4 bg-white p-1 rounded" />
+                    <h3 class="text-xl font-semibold text-gray-800">Django</h3>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md flex flex-col items-center text-center hover:shadow-xl transition duration-300 transform hover:-translate-y-1 hover:-rotate-3 animate-on-scroll pop-in delay-600">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="SQL Icon" class="w-16 h-16 mb-4" />
+                    <h3 class="text-xl font-semibold text-gray-800">SQL</h3>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md flex flex-col items-center text-center hover:shadow-xl transition duration-300 transform hover:-translate-y-1 hover:rotate-3 animate-on-scroll pop-in delay-700">
+                    <img src="https://cdn-icons-png.flaticon.com/512/4228/4228743.png" alt="Problem Solving Icon" class="w-16 h-16 mb-4" />
+                    <h3 class="text-xl font-semibold text-gray-800">Problem Solving</h3>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md flex flex-col items-center text-center hover:shadow-xl transition duration-300 transform hover:-translate-y-1 hover:-rotate-3 animate-on-scroll pop-in delay-800">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git Icon" class="w-16 h-16 mb-4" />
+                    <h3 class="text-xl font-semibold text-gray-800">Git & GitHub</h3>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="py-16 md:py-24 bg-white">
+        <div class="container mx-auto px-4 max-w-5xl">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-10 animate-on-scroll fade-in-up">My Projects</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-gray-50 rounded-lg shadow-md overflow-hidden hover:shadow-xl transition duration-300 transform hover:-translate-y-2 animate-on-scroll fade-in-up delay-100">
+                    <img src="https://placehold.co/400x250/20B2AA/FFFFFF?text=Project+1" alt="Project 1 Image" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-2">LuxeStay</h3>
+                        <p class="text-gray-700 text-base mb-4">Developed a Hotel Booking Website using Python, Django, HTML, CSS, and SQL, featuring user authentication, room booking, and admin dashboard functionalities.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-teal-200 text-teal-800 text-xs font-medium px-2.5 py-0.5 rounded-full">HTML</span>
+                            <span class="bg-teal-200 text-teal-800 text-xs font-medium px-2.5 py-0.5 rounded-full">CSS</span>
+                            <span class="bg-teal-200 text-teal-800 text-xs font-medium px-2.5 py-0.5 rounded-full">JavaScript</span>
+                            <span class="bg-teal-200 text-teal-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Python</span>
+                            <span class="bg-teal-200 text-teal-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Django</span>
+                            <span class="bg-teal-200 text-teal-800 text-xs font-medium px-2.5 py-0.5 rounded-full">SQL</span>
+                        </div>
+                        <a href="https://luxestay-9nf2.onrender.com " target="_blank" class="text-teal-600 hover:text-teal-800 font-medium transition duration-300">View Project &rarr;</a>
+                    </div>
+                </div>
+                <div class="bg-gray-50 rounded-lg shadow-md overflow-hidden hover:shadow-xl transition duration-300 transform hover:-translate-y-2 animate-on-scroll fade-in-up delay-200">
+                    <img src="https://placehold.co/400x250/20B2AA/FFFFFF?text=Project+2" alt="Project 2 Image" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-2">Quiz-App</h3>
+                        <p class="text-gray-700 text-base mb-4">Developed an interactive Quiz App using HTML, CSS, and JavaScript, featuring dynamic questions, real-time scoring, and a responsive user interface</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-teal-200 text-teal-800 text-xs font-medium px-2.5 py-0.5 rounded-full">HTML</span>
+                            <span class="bg-teal-200 text-teal-800 text-xs font-medium px-2.5 py-0.5 rounded-full">CSS</span>
+                            <span class="bg-teal-200 text-teal-800 text-xs font-medium px-2.5 py-0.5 rounded-full">JavaScript</span>
+                        </div>
+                        <a href="#" target="_blank" class="text-teal-600 hover:text-teal-800 font-medium transition duration-300">View Project &rarr;</a>
+                    </div>
+                </div>
+                <div class="bg-gray-50 rounded-lg shadow-md overflow-hidden hover:shadow-xl transition duration-300 transform hover:-translate-y-2 animate-on-scroll fade-in-up delay-300">
+                    <img src="https://placehold.co/400x250/20B2AA/FFFFFF?text=Project+3" alt="Project 3 Image" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-2">voice assitant</h3>
+                        <p class="text-gray-700 text-base mb-4">working on it!</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-teal-200 text-teal-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Vue.js</span>
+                            <span class="bg-teal-200 text-teal-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Firebase</span>
+                        </div>
+                        <a href="#" target="_blank" class="text-teal-600 hover:text-teal-800 font-medium transition duration-300">View Project &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="certifications" class="py-16 md:py-24 bg-gray-50">
+        <div class="container mx-auto px-4 max-w-4xl">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-10 animate-on-scroll fade-in-up">Certifications</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-md animate-on-scroll fade-in-up delay-100">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Python</h3>
+                    <p class="text-gray-700 text-base mb-2">Issued by HackerRank</p>
+                    <p class="text-gray-600 text-sm mb-4">Credential ID: B99276AOA174</p>
+                    <a href="src/python_basic certificate.pdf" target="_blank" class="text-teal-600 hover:text-teal-800 font-medium transition duration-300">View Credential &rarr;</a>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md animate-on-scroll fade-in-up delay-200">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">SQl (intermediate)</h3>
+                    <p class="text-gray-700 text-base mb-2">Issued HackerRank</p>
+                    <p class="text-gray-600 text-sm mb-4">Credential ID: B38A4685273D</p>
+                    <a href="src/sql_intermediate certificate.pdf" target="_blank" class="text-teal-600 hover:text-teal-800 font-medium transition duration-300">View Credential &rarr;</a>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md animate-on-scroll fade-in-up delay-300">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Problem Solving and Ideation</h3>
+                    <p class="text-gray-700 text-base mb-2">Issued by Gurunanak college</p>
+                    <p class="text-gray-600 text-sm mb-4">Credential ID: S1004ib</p>
+                    <a href="src/prob solving gnc.pdf" target="_blank" class="text-teal-600 hover:text-teal-800 font-medium transition duration-300">View Credential &rarr;</a>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md animate-on-scroll fade-in-up delay-300">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Master class in full-stack development</h3>
+                    <p class="text-gray-700 text-base mb-2">Issued by NoviTech</p>
+                    <p class="text-gray-600 text-sm mb-4">Credential ID: NT_B13FSD466</p>
+                    <a href="src/novitech ms class completion.pdf" target="_blank" class="text-teal-600 hover:text-teal-800 font-medium transition duration-300">View Credential &rarr;</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-16 md:py-24 bg-gray-100">
+        <div class="container mx-auto px-4 max-w-3xl">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-10 animate-on-scroll fade-in-up">Get In Touch</h2>
+            <div class="bg-white p-8 rounded-lg shadow-md animate-on-scroll fade-in-up delay-200">
+                <form id="contactForm" action="https://formspree.io/f/xyzjgqpr" method="POST" class="space-y-6">
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                        <input type="text" id="name" name="name" required class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm transition duration-200">
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                        <input type="email" id="email" name="email" required class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm transition duration-200">
+                    </div>
+                    <div>
+                        <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Message</label>
+                        <textarea id="message" name="message" rows="5" required class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm transition duration-200"></textarea>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="inline-flex justify-center py-3 px-8 border border-transparent shadow-sm text-base font-medium rounded-full text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition duration-300 transform hover:scale-105">
+                            Send Message
+                        </button>
+                    </div>
+                </form>
+                <div id="formMessage" class="mt-4 text-center text-sm font-medium hidden"></div>
+            </div>
+            <div class="mt-10 text-center text-gray-700 animate-on-scroll fade-in-up delay-300">
+                <p>You can also reach me at: <a href="mailto:ts.sarukesh@gmail.com" class="text-teal-600 hover:underline"> 📧 sarukesh@gmail.com</a></p>
+                <p class="mt-2">Connect with me on social media:</p>
+                <div class="flex justify-center space-x-4 mt-4">
+                    <a href="https://www.linkedin.com/in/sarukesh-t" target="_blank" class="text-teal-600 hover:text-teal-800 transition duration-300">💼 LinkedIn</a>
+                    <a href="https://github.com/sarukesh-t " target="_blank" class="text-teal-600 hover:text-teal-800 transition duration-300">🧑‍💻 GitHub</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto text-center px-4">
+            <p>&copy; 2025 saruhh. All rights reserved.</p>
+            <p class="text-sm mt-2">Designed and built with <span class="text-red-500">&hearts;</span></p>
+        </div>
+    </footer>
+
+    <button id="backToTopBtn" class="fixed bottom-6 right-6 bg-teal-600 text-white p-3 rounded-full shadow-lg hover:bg-teal-700 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 hidden">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+        </svg>
+    </button>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Handle contact form submission
+        document.getElementById('contactForm').addEventListener('submit', async function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const formMessage = document.getElementById('formMessage');
+            formMessage.classList.remove('hidden', 'text-green-600', 'text-red-600');
+            formMessage.classList.add('text-gray-700'); // Default color for pending state
+            formMessage.textContent = 'Sending message...'; // Show a loading message
+
+            const formData = new FormData(this); // Get form data
+
+            try {
+                const response = await fetch(this.action, {
+                    method: this.method,
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json' // Essential for Formspree API
+                    }
+                });
+
+                if (response.ok) { // Check if the response is successful (status 2xx)
+                    formMessage.textContent = 'Thank you for your message! I will get back to you soon 😊';
+                    formMessage.classList.remove('text-gray-700');
+                    formMessage.classList.add('text-green-600');
+                    this.reset(); // Clear the form after successful submission
+                } else {
+                    // If response is not OK, try to parse JSON for error messages
+                    const data = await response.json();
+                    if (data.errors) {
+                        formMessage.textContent = `Error: ${data.errors.map(err => err.message).join(', ')}`;
+                    } else {
+                        formMessage.textContent = 'Oops! There was a problem sending your message. Please try again.';
+                    }
+                    formMessage.classList.remove('text-gray-700');
+                    formMessage.classList.add('text-red-600');
+                }
+            } catch (error) {
+                console.error('Network error:', error);
+                formMessage.textContent = 'Network error: Could not connect to the server. Please check your internet connection.';
+                formMessage.classList.remove('text-gray-700');
+                formMessage.classList.add('text-red-600');
+            } finally {
+                formMessage.classList.remove('hidden'); // Ensure message is visible
+            }
+        });
+
+        // Intersection Observer for scroll animations
+        const animateOnScrollElements = document.querySelectorAll('.animate-on-scroll');
+
+        const observerOptions = {
+            root: null, // viewport
+            rootMargin: '0px',
+            threshold: 0.1 // Trigger when 10% of the element is visible
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    // Apply specific animation class based on data attribute or existing class
+                    if (entry.target.classList.contains('fade-in-up')) {
+                        entry.target.style.animation = `fadeInUp 0.6s ease-out forwards ${getComputedStyle(entry.target).animationDelay || '0s'}`;
+                    } else if (entry.target.classList.contains('slide-in-left')) {
+                        entry.target.style.animation = `slideInLeft 0.6s ease-out forwards ${getComputedStyle(entry.target).animationDelay || '0s'}`;
+                    } else if (entry.target.classList.contains('slide-in-right')) {
+                        entry.target.style.animation = `slideInRight 0.6s ease-out forwards ${getComputedStyle(entry.target).animationDelay || '0s'}`;
+                    } else if (entry.target.classList.contains('pop-in')) {
+                        entry.target.style.animation = `popIn 0.6s ease-out forwards ${getComputedStyle(entry.target).animationDelay || '0s'}`;
+                    }
+                    observer.unobserve(entry.target); // Stop observing once animated
+                }
+            });
+        }, observerOptions);
+
+        animateOnScrollElements.forEach(element => {
+            observer.observe(element);
+        });
+
+        // Back to Top Button functionality
+        const backToTopBtn = document.getElementById('backToTopBtn');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) { // Show button after scrolling 300px
+                backToTopBtn.classList.remove('hidden');
+                backToTopBtn.classList.add('opacity-100');
+            } else {
+                backToTopBtn.classList.add('hidden');
+                backToTopBtn.classList.remove('opacity-100');
+            }
+        });
+
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Particle Background Animation for Hero Section
+        const canvas = document.getElementById('heroCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let particles = [];
+        const numParticles = 80;
+        const connectionDistance = 120; // Max distance for particles to connect
+        const mouseRadius = 150; // Radius around mouse for particles to react
+
+        // Mouse position object
+        let mouse = {
+            x: null,
+            y: null,
+            radius: mouseRadius
+        };
+
+        // Update mouse position on mousemove
+        window.addEventListener('mousemove', function(event) {
+            mouse.x = event.x;
+            mouse.y = event.y + window.scrollY; // Adjust for scroll position
+        });
+
+        // Reset mouse position when mouse leaves the document
+        window.addEventListener('mouseout', function() {
+            mouse.x = null;
+            mouse.y = null;
+        });
+
+        // Particle constructor function
+        function Particle(x, y, directionX, directionY, size, color) {
+            this.x = x;
+            this.y = y;
+            this.directionX = directionX;
+            this.directionY = directionY;
+            this.size = size;
+            this.color = color;
+        }
+
+        // Draw individual particle
+        Particle.prototype.draw = function() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+            ctx.fillStyle = this.color;
+            ctx.fill();
+        };
+
+        // Update particle position and draw connections
+        Particle.prototype.update = function() {
+            // Check boundaries
+            if (this.x + this.size > canvas.width || this.x - this.size < 0) {
+                this.directionX = -this.directionX;
+            }
+            if (this.y + this.size > canvas.height || this.y - this.size < 0) {
+                this.directionY = -this.directionY;
+            }
+
+            // Move particle
+            this.x += this.directionX;
+            this.y += this.directionY;
+
+            // Mouse interactivity
+            if (mouse.x !== null && mouse.y !== null) {
+                let dx = mouse.x - this.x;
+                let dy = mouse.y - this.y;
+                let distance = Math.sqrt(dx * dx + dy * dy);
+
+                if (distance < mouse.radius + this.size) {
+                    if (mouse.x < this.x && this.x < canvas.width - this.size * 10) {
+                        this.x += 10;
+                    }
+                    if (mouse.x > this.x && this.x > this.size * 10) {
+                        this.x -= 10;
+                    }
+                    if (mouse.y < this.y && this.y < canvas.height - this.size * 10) {
+                        this.y += 10;
+                    }
+                    if (mouse.y > this.y && this.y > this.size * 10) {
+                        this.y -= 10;
+                    }
+                }
+            }
+
+            this.draw();
+        };
+
+        // Initialize particles
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < numParticles; i++) {
+                let size = (Math.random() * 5) + 1; // Particle size between 1 and 6
+                let x = Math.random() * ((canvas.width - size * 2) - (size * 2)) + size * 2;
+                let y = Math.random() * ((canvas.height - size * 2) - (size * 2)) + size * 2;
+                let directionX = (Math.random() * 0.5) - 0.25; // Random direction between -0.25 and 0.25
+                let directionY = (Math.random() * 0.5) - 0.25;
+                let color = 'rgba(255, 255, 255, 0.8)'; // White particles
+
+                particles.push(new Particle(x, y, directionX, directionY, size, color));
+            }
+        }
+
+        // Connect particles with lines
+        function connectParticles() {
+            let opacityValue = 1;
+            for (let a = 0; a < particles.length; a++) {
+                for (let b = a; b < particles.length; b++) {
+                    let distance = ((particles[a].x - particles[b].x) * (particles[a].x - particles[b].x)) +
+                                   ((particles[a].y - particles[b].y) * (particles[a].y - particles[b].y));
+                    if (distance < connectionDistance * connectionDistance) {
+                        opacityValue = 1 - (distance / (connectionDistance * connectionDistance));
+                        ctx.strokeStyle = `rgba(255, 255, 255, ${opacityValue})`;
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[a].x, particles[a].y);
+                        ctx.lineTo(particles[b].x, particles[b].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
+
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+            }
+            connectParticles();
+        }
+
+        // Resize canvas when window resizes
+        window.addEventListener('resize', function() {
+            canvas.width = window.innerWidth;
+            canvas.height = document.getElementById('hero').offsetHeight; // Match hero section height
+            initParticles(); // Re-initialize particles on resize
+        });
+
+        // Initialize canvas and particles on load
+        window.addEventListener('load', function() {
+            canvas.width = window.innerWidth;
+            canvas.height = document.getElementById('hero').offsetHeight; // Match hero section height
+            initParticles();
+            animate();
+        });
+
+    </script>
+</body>
+</html>
